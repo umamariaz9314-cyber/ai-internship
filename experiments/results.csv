@@ -1,0 +1,5 @@
+run_id,seed,model,hyperparameters,cv_mean,cv_std,test_accuracy,notes
+1,42,LogisticRegression,"C=1.0, default",0.7856317870817903,0.022319846461439415,0.8044692737430168,"Baseline model with no leakage, StandardScaler applied correctly"
+2,42,DummyClassifier (majority),strategy=most_frequent,,,0.6145251396648045,Majority class baseline
+3,42,Heuristic (Sex only),N/A,,,0.776536312849162,Simple rule-based baseline
+4,42,LogisticRegression (target leak),"C=1.0, default",,,1.0,Deliberate target leakage demonstration
