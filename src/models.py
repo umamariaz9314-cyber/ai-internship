@@ -33,3 +33,39 @@ class LinearRegressionGD:
     def predict(self, X):
         X = np.asarray(X).flatten()
         return self.w * X + self.b
+
+
+
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.impute import SimpleImputer
+from sklearn.ensemble import RandomForestClassifier
+
+
+def build_full_pipeline():
+    """Build the full preprocessing + model pipeline for Titanic data."""
+    numeric_features = ['Age', 'SibSp', 'Parch', 'Fare', 'FamilySize', 'FarePerPerson']
+    categorical_features = ['Pclass', 'Sex', 'Embarked', 'Title', 'AgeBucket', 'IsAlone', 'HasCabin']
+
+    numeric_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='median')),
+        ('scaler', StandardScaler())
+    ])
+
+    categorical_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='most_frequent')),
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+    ])
+
+    preprocessor = ColumnTransformer(transformers=[
+        ('num', numeric_transformer, numeric_features),
+        ('cat', categorical_transformer, categorical_features)
+    ])
+
+    pipeline = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('model', RandomForestClassifier(n_estimators=200, random_state=42))
+    ])
+
+    return pipeline
