@@ -1,5 +1,8 @@
 run_id,seed,model,hyperparameters,cv_mean,cv_std,test_accuracy,notes
-1,42,LogisticRegression,"C=1.0, default",0.7856317870817903,0.022319846461439415,0.8044692737430168,"Baseline model with no leakage, StandardScaler applied correctly"
+1,42,LogisticRegression,"C=1.0, default",0.7856317870817903,0.0223198464614394,0.8044692737430168,"Baseline model with no leakage, StandardScaler applied correctly"
 2,42,DummyClassifier (majority),strategy=most_frequent,,,0.6145251396648045,Majority class baseline
-3,42,Heuristic (Sex only),N/A,,,0.776536312849162,Simple rule-based baseline
+3,42,Heuristic (Sex only),,,,0.776536312849162,Simple rule-based baseline
 4,42,LogisticRegression (target leak),"C=1.0, default",,,1.0,Deliberate target leakage demonstration
+5,42,RandomForest,n_estimators=200,,,0.8156424581005587,Day 10 ensemble
+6,42,XGBoost,"lr=0.05, max_depth=4, early stopping",,,0.8268156424581006,Early stopping applied
+7,42,XGBoost (Optuna tuned),"{'n_estimators': 120, 'max_depth': 3, 'learning_rate': 0.252178520565199, 'subsample': 0.9440660318917313, 'colsample_bytree': 0.7847665983301212, 'min_child_weight': 6}",0.8357726780261991,,,30-trial Optuna study
